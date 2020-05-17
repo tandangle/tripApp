@@ -49,7 +49,7 @@ app.use('/login', loginRouter);
 passport.use(
     new LocalStrategy({ userNameField: 'email' }, (email, password, done) => {
         //match user
-        db.users.findOne({ raw: true, where: { email: email } })
+        User.findOne({ raw: true, where: { email: email } })
             .then(user => {
                 console.log(user)
                 if (!user[0]) {
@@ -74,7 +74,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser((id, done) => {
-    db.users.findOne({ raw: true, where: { id: id } }, (err, user) => {
+    User.findOne({ raw: true, where: { id: id } }, (err, user) => {
         done(err, user[0])
     });
 });
