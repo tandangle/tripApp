@@ -29,6 +29,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Register</h3>
+                    <li> <% if (typeof error != 'undefined')  { %>
+                        <p><%= error %></p>
+                        <% } %>  </li>
                 </div>
                 <div class="card-body">
                     <form action="/register" method="POST">
