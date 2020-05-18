@@ -92,3 +92,14 @@ p {
 a {
   color: white;
 }
+
+#Title {
+  color: white;
+  font-size: 50px;
+  text-align: center;
+}
+
+.megacontainer {
+  display: flex;
+  justify-content: space-evenly;
+}
