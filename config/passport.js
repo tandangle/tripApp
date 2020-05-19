@@ -1,28 +1,21 @@
-const LocalStrategy = require('passport-local').Strategy;
-const bycrypt = require('bcryptjs');
 
-//load user model
-const db = require('../models');
-// const db = require('../models/user');
+const JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
 
-module.export =
-    new LocalStrategy({ userNameField: 'email' }, (email, password, done) => {
-        //match user
-        db.user.findOne({ where: { email: email } })
-            .then(user => {
-                if (!user) {
-                    return done(null, false, { msg: 'that email not registered' })
-                }
 
-                //Match password
-                bycrypt.compare(password, user[0].password, (err, isMatch) => {
-                    if (err) throw err;
-                    if (isMatch) {
-                        return done(null, user)
-                    } else {
-                        return done(null, false, { msg: 'Password incorrect' });
-                    }
-                })
-            })
-            .catch(err => console.log(err))
-    });
+//load up the user model
+const User = require('../models').user;
+
+module.exports = function(passport) {
+  const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+    secretOrKey: 'nodeauthsecret',
+  };
+  passport.use('jwt', new JwtStrategy(opts, function(jwt_payload, done) {
+    User
+      .findByPk(jwt_payload.id)
+      .then((user) => { return done(null, user); })
+      .catch((error) => { return done(error, false); });
+  }));
+};
+
