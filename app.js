@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('passport')
-const localStrategy = require('./config/passport.js')
 const db = require('./models')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,11 +11,11 @@ var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login'); 
 var dashboardRouter = require('./routes/dashboard'); 
 var loginRouter = require('./routes/login');
-
+require('./config/passport')
 
 var app = express();
 
-
+const users = []
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,10 +27,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //
-passport.use(localStrategy);
 passport.serializeUser(function(user, done) {
-    done(null, user[0].id);
+    done(null, user.id);
 });
+
 
 passport.deserializeUser((id, done) => {
     db.user.findAll({ raw: true, where: { id: id } })
@@ -50,6 +49,10 @@ app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/dashboard', dashboardRouter);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
