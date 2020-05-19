@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var bcrypt = require('bcrypt');
 const passport = require('passport')
 const localStrategy = require('./config/passport.js')
 const db = require('./models')
@@ -17,7 +16,6 @@ var loginRouter = require('./routes/login');
 
 var app = express();
 
-const users = []
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
