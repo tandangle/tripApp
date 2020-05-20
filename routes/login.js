@@ -33,8 +33,8 @@ router.post('/', function(req, res) {
                 
                 console.log(err, data);
               })
-               //res.redirect('/')
-
+               // res.redirect('/')
+               
               res.json({success: true, token: 'JWT ' + token});
             } else {
                 // res.redirect('/login')
