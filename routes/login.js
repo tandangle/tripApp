@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/auth', passport.authenticate('jwt', { session: false }),
     function(req, res) {
-      res.redirect('users')
+      res.redirect('map')
     }
 );
 
@@ -38,7 +38,7 @@ router.post('/', function(req, res) {
                 
                 console.log(err, data);
               })
-              res.cookie('token', token, {maxAge: 60 * 1000 * 5, secure: false})
+              res.cookie('jwt', token, {maxAge: 60 * 1000 * 5, secure: false})
               res.redirect('/login/auth')
 
         //  res.json({success: true, token: 'JWT ' + token});
