@@ -2,7 +2,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-require('../config/passport');
+const passport = require('../config/passport');
 const User = require('../models').User;
 
 
@@ -12,6 +12,12 @@ router.get('/', function(req, res, next) {
     res.render('login');
 });
 
+
+router.get('/auth', passport.authenticate('jwt', { session: false }),
+    function(req, res) {
+      res.redirect('users')
+    }
+);
 
 router.post('/', function(req, res) {
     User
@@ -32,9 +38,10 @@ router.post('/', function(req, res) {
                 
                 console.log(err, data);
               })
-            // res.redirect('/')
+              res.cookie('token', token, {maxAge: 60 * 1000 * 5, secure: false})
+              res.redirect('/login/auth')
 
-         res.json({success: true, token: 'JWT ' + token});
+        //  res.json({success: true, token: 'JWT ' + token});
             } else {
                  res.render('login', {error: 'Authentication failed. Wrong password.'})
             }
@@ -56,4 +63,6 @@ router.post('/', function(req, res) {
       return null;
     }
   };
+
+  
 module.exports = router;
