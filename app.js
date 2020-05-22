@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
+var travelListRouter = require('./routes/map')
 require('./config/passport')
 
 var app = express();
@@ -37,6 +38,16 @@ passport.deserializeUser((id, done) => {
         });
 });
 
+app.use(function(req,res,next ){
+    if(req.path === "/login" || req.path === "/register" || req.path === "/"){
+        return next()
+    } else if (req.isAuthenticated()) {
+        return next()
+    } else {
+        res.redirect("/login")
+    }
+})
+
 //initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,6 +57,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/map', travelListRouter)
 
 
 

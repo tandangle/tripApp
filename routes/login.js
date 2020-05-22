@@ -32,9 +32,10 @@ router.post('/', function(req, res) {
                 
                 console.log(err, data);
               })
-            // res.redirect('/')
+            res.redirect('map')
 
-         res.json({success: true, token: 'JWT ' + token});
+
+        //  res.json({success: true, token: 'JWT ' + token});
             } else {
                  res.render('login', {error: 'Authentication failed. Wrong password.'})
             }
