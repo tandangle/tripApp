@@ -30,7 +30,7 @@ router.post('/', function(req, res) {
               var token = jwt.sign(JSON.parse(JSON.stringify(user)), 'nodeauthsecret', {expiresIn: 86400 * 30});
               jwt.verify(token, 'nodeauthsecret', function(err, data){
                 
-                console.log(err, data);
+                console.log(err, "line 33 login.js" + data);
               })
             res.redirect('map')
 

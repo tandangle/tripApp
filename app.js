@@ -39,6 +39,7 @@ passport.deserializeUser((id, done) => {
 });
 
 app.use(function(req,res,next ){
+    console.log(req.isAuthenticated());
     if(req.path === "/login" || req.path === "/register" || req.path === "/"){
         return next()
     } else if (req.isAuthenticated()) {
