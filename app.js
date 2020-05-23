@@ -63,6 +63,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/logout', loginRouter);
 app.use('/map', mapRouter)
 app.use('/dashboard', dashboardRouter);
 
