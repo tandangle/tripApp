@@ -11,7 +11,9 @@ var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login'); 
 var dashboardRouter = require('./routes/dashboard'); 
 var loginRouter = require('./routes/login');
+var googleRouter = require('./routes/google');
 require('./config/passport')
+const cookieSession = require('cookie-session')
 
 var app = express();
 
@@ -43,12 +45,35 @@ passport.deserializeUser((id, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Google strategy 
+app.use(cookieSession({
+    name: 'travelapp-session',
+    keys: ['key1', 'key2']
+  }))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/error', (req, res) => res.redirect("/error"))
+app.get('/auth/google/redirect', (req, res) => res.redirect("/dashboard"))
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    res.redirect('/redirect');
+  });
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/google', googleRouter);
 
 
 

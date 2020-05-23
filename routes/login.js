@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 require('../config/passport');
 const User = require('../models').User;
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuthStrategy; 
+
 
 
 
@@ -22,8 +25,9 @@ router.post('/', function(req, res) {
         })
         .then((user) => {
           if (!user) {
-            res.render('login', {error: 'Authentication failed. User not found.'})
-
+            return res.status(401).send({
+              message: 'Authentication failed. User not found.',
+            });
           }
           user.comparePassword(req.body.password, (err, isMatch) => {
             if(isMatch && !err) {
@@ -32,22 +36,20 @@ router.post('/', function(req, res) {
                 
                 console.log(err, data);
               })
-<<<<<<< HEAD
                // res.redirect('/')
                
               res.json({success: true, token: 'JWT ' + token});
-=======
-            // res.redirect('/')
-
-         res.json({success: true, token: 'JWT ' + token});
->>>>>>> master
             } else {
-                 res.render('login', {error: 'Authentication failed. Wrong password.'})
+                // res.redirect('/login')
+
+              res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
             }
           })
         })
         .catch((error) => res.status(400).send(error));
   });
+
+  
 
 
   getToken = function (headers) {
