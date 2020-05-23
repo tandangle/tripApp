@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>tripApp Test Page</title>  
+        <link rel="stylesheet" href="../stylesheets/map.css">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+              <div id="branding">
+                <h1><span class="highlight">trip</span>App</h1>
+              </div>
+              <nav>
+                <ul>
+                  <li><a href= "Dashboard.html">Dashboard</a></li>
+                  <li><button id="logout">Logout</button></a></li>
+                </ul>
+              </nav>
+            </div> 
+        </header>
+
+        <input id="pac-input" class="controls" type="text" placeholder="Search Google Maps">
+        <div id="map-canvas">
+
+            <div id="map"></div>
+    
+            <div id="listing">
+                <table id="resultsTable">
+                <tbody id="results"></tbody>
+                </table>
+            </div>
+    
+            <div style="display: none">
+                <div id="info-content">
+                <table>
+                    <tr id="iw-url-row" class="iw_table_row">
+                      <td id="iw-icon" class="iw_table_icon"></td>
+                      <td id="iw-url"></td>
+                    </tr>
+                    <tr id="iw-address-row" class="iw_table_row">
+                      <td class="iw_attribute_name">Address:</td>
+                      <td id="iw-address"></td>
+                    </tr>
+                    <tr id="iw-phone-row" class="iw_table_row">
+                      <td class="iw_attribute_name">Telephone:</td>
+                      <td id="iw-phone"></td>
+                    </tr>
+                    <tr id="iw-rating-row" class="iw_table_row">
+                      <td class="iw_attribute_name">Rating:</td>
+                      <td id="iw-rating"></td>
+                    </tr>
+                    <tr id="iw-website-row" class="iw_table_row">
+                      <td class="iw_attribute_name">Website:</td>
+                      <td id="iw-website"></td>
+                    </tr>
+                    <tr id=save-button-row>
+                      <td>
+                        <form id="save" method="POST">
+                        <button type="submit" id="save-button">Save Location</button>
+                        </form>
+                      </td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        </div>
+        <script src="../scripts/map.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E&libraries=places&callback=initAutocomplete" async defer></script>
+
+    </body>
+</html>
