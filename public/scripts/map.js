@@ -149,8 +149,8 @@ function buildIWContent(place) {
   } else {
     document.getElementById('iw-website-row').style.display = 'none';
   }
-  document.getElementById("save-button-row").innerHTML = `
-  <td><form action="/map/travel_list/${place.place_id}" method="POST">
-  <button type="submit" id="save-button">Save Location</button>
-    </form></td>`
+  document.getElementById("save").setAttribute("action", `/map/travel_list/${place.place_id}`)
+  // document.getElementById("save").submit(function(e){
+  //   e.preventDefault();
+  // })
 }

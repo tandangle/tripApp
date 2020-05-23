@@ -2,8 +2,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-require('../config/passport');
 const User = require('../models').User;
+const passport = require('../config/passport');
 
 
 
@@ -13,47 +13,11 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/', function(req, res) {
-    User
-        .findOne({
-          where: {
-            email: req.body.email
-          }
-        })
-        .then((user) => {
-          if (!user) {
-            res.render('login', {error: 'Authentication failed. User not found.'})
+router.post('/', passport.authenticate("local", {
+  successRedirect: "/map",
+  failureRedirect: "/login",
+  failureFlash: true
+})
+);
 
-          }
-          user.comparePassword(req.body.password, (err, isMatch) => {
-            if(isMatch && !err) {
-              var token = jwt.sign(JSON.parse(JSON.stringify(user)), 'nodeauthsecret', {expiresIn: 86400 * 30});
-              jwt.verify(token, 'nodeauthsecret', function(err, data){
-                
-                console.log(err, data);
-              })
-            // res.redirect('/')
-
-         res.json({success: true, token: 'JWT ' + token});
-            } else {
-                 res.render('login', {error: 'Authentication failed. Wrong password.'})
-            }
-          })
-        })
-        .catch((error) => res.status(400).send(error));
-  });
-
-
-  getToken = function (headers) {
-    if (headers && headers.authorization) {
-      var parted = headers.authorization.split(' ');
-      if (parted.length === 2) {
-        return parted[1];
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  };
 module.exports = router;

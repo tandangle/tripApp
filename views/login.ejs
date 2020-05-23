@@ -29,9 +29,17 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Login</h3>
-                    <li> <% if (typeof error != 'undefined')  { %>
-                        <p><%= error %></p>
-                        <% } %>  </li>
+                    <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+                        <p><%= error.message %></p>
+                        <% }) %> <% } %>
+                  
+                        <% if(messages.success_msg) { %>
+                        <p><%= messages.success_msg %></p>
+                        <% } %>
+                  
+                        <% if (messages.error) { %>
+                        <p><%= messages.error %></p>
+                        <% } %>
                 </div>
                 	<div class="d-flex justify-content-end social_icon">
                     <form action="/" method="GET">
