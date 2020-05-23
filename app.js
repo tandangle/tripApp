@@ -9,6 +9,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
+var mapRouter = require('./routes/map')
+var dashboardRouter = require('./routes/dashboard')
 require('./config/passport')
 
 var app = express();
@@ -46,6 +48,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/map', mapRouter)
+app.use('/dashboard', dashboardRouter);
 
 
 
