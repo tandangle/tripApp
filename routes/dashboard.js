@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const travelList = require('../models').travelList;
 const axios = require('axios');
+var async = require("async");
 
 /* GET users listing. */
 // router.get("/", function(req, res, next) {
@@ -15,21 +16,44 @@ router.get("/", function(req, res) {
     travelList.findAll({
         where: {user_id: req.user}
     })
+    // .then(async function (travelList){
+    //     console.log(travelList);
+    //     placeDetails = [];
+    //     for await (let item of travelList){
+    //         axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${item.place_id}&key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E`)
+    //         .then(function(response){
+    //             placeDetails.push(response.data)
+    //         })
+    //         .catch(function(error){
+    //             console.log(error)
+    //         })
+    //     }
+    //     console.log(placeDetails);
+    //     res.render("dashboard", {placeDetails: placeDetails})
+    // })
     .then(function (travelList){
-        console.log(travelList);
-        travelList.forEach(function(item) {
+        console.log("Line 35");
+        var placeDetails = [];
+        async.each(travelList, function(item, callback){
             axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${item.place_id}&key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E`)
-            .then(function(response){
-                console.log(response.data);
-                placeDetails.push(response.data)
-            })
-            .catch(function(error){
-                console.log(error)
-            })
+                    .then(function(response){
+                        placeDetails.push(response.data);
+                        callback(null)
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                        callback(err)
+                    })
+        }, function(err){
+            if(err) {
+                console.log("line 49")
+                console.log(err)
+            } else {
+                console.log(placeDetails);
+                console.log("Line 53");
+                res.render("dashboard", {placeDetails: placeDetails})
+            }
         })
-        console.log(placeDetails);
-        console.log(req.user.firstName);
-        res.render("dashboard", {user: req.user.firstName, placeDetails: placeDetails})
     })
 })
 

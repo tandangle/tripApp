@@ -4,6 +4,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <meta charset="utf-8">
         <title>tripApp Test Page</title>  
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="../stylesheets/map.css">
     </head>
     <body>
@@ -20,10 +21,17 @@
               </nav>
             </div> 
         </header>
-        <p>Hello! <%= user %> </p>
 
-        <% if (typeof placeDetails !== 'undefined') { %> <% placeDetails.forEach(placeDetail => { %>
-          <p><%= placeDetail %></p>
+        <% if (typeof placeDetails !== 'undefined') { %> <% placeDetails.forEach( function(placeDetail){ %>
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"><%= placeDetail.result.name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= placeDetail.result.formatted_address %></h6>
+              <p class="card-text"><%= placeDetail.result.formatted_phone_number %>
+              Rating: <%= placeDetail.result.rating %></p>
+              <a href="<%= placeDetail.result.url %>" class="card-link">Link</a>
+            </div>
+          </div>
           <% }) %> <% } %>
 
     </body>
