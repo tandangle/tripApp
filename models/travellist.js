@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Users",
+        model: "User",
         key: "id",
         onDelete: "CASCADE"
       }
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   travelList.associate = function(models) {
-    travelList.belongsTo(models.User, {onDelete: "CASCADE", hooks: true})
+    // travelList.belongsTo(models.User, {onDelete: "CASCADE", hooks: true})
   };
   return travelList;
 };
