@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login'); 
-var dashboardRouter = require('./routes/dashboard'); 
 var loginRouter = require('./routes/login');
 var googleRouter = require('./routes/google');
 require('./config/passport')
@@ -55,7 +54,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/error', (req, res) => res.redirect("/error"))
-app.get('/auth/google/redirect', (req, res) => res.redirect("/dashboard"))
+app.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => res.redirect("/"))
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
@@ -72,7 +71,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
-app.use('/dashboard', dashboardRouter);
 app.use('/google', googleRouter);
 
 
