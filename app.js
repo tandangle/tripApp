@@ -46,18 +46,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(function(req,res,next) {
-//     console.log(req.isAuthenticated());
-//     next();
-// });
-
-//
-
-
-//initialize passport
-// app.use(passport.initialize());
-// app.use(passport.session());
-
+// restrict unauthenticated users from accesing pages other than login/register pages
+app.use(function(req,res,next ){
+    if(req.path === "/login" || req.path === "/register"){
+        return next()
+    } else if (req.isAuthenticated()) {
+        return next()
+    } else {
+        res.redirect("/login")
+    }
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
