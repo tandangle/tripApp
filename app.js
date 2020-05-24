@@ -48,6 +48,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< HEAD
 // app.use(function(req,res,next) {
 //     console.log(req.isAuthenticated());
 //     next();
@@ -79,11 +80,24 @@ app.get('/auth/google/callback',
     res.redirect('/redirect');
   });
 
+=======
+// restrict unauthenticated users from accesing pages other than login/register pages
+app.use(function(req,res,next ){
+    if(req.path === "/login" || req.path === "/register"){
+        return next()
+    } else if (req.isAuthenticated()) {
+        return next()
+    } else {
+        res.redirect("/login")
+    }
+})
+>>>>>>> master
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/logout', loginRouter);
 app.use('/map', mapRouter)
 app.use('/dashboard', dashboardRouter);
 

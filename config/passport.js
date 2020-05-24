@@ -34,16 +34,8 @@ passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-
-passport.deserializeUser((id, done) => {
-    User.findOne({ raw: true, where: { id: id } })
-        .then((err, user) => {
-            console.log(err);
-            console.log(user);
-            done(err, user)
-        });
-});
-
-
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+  });
 
 module.exports = passport;
