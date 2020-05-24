@@ -15,7 +15,7 @@ var loginRouter = require('./routes/login');
 var mapRouter = require('./routes/map')
 var dashboardRouter = require('./routes/dashboard')
 require('./config/passport')
-const cookieSession = require('cookie-session')
+
 
 var app = express();
 
@@ -61,10 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(passport.session());
 
 //Google strategy 
-app.use(cookieSession({
-    name: 'travelapp-session',
-    keys: ['key1', 'key2']
-  }))
+
 
 app.use(passport.initialize());
 app.use(passport.session());
