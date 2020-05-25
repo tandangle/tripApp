@@ -9,10 +9,10 @@ var router = express.Router();
 
 router.get(function(req,res,next) {
     travelList.findAll({
-        where: {user_id: req.user_id}
+        where: {Users_id: req.Users_id}
     })
-    .then(function (travelList){
-        res.render("dashboard", {user: req.user.firstName, travelList: travelList})
+    .then(function (travelLists){
+        res.render('dashboard', {Users: req.Users.firstName, travelLists: travelLists})
     })
 })
 

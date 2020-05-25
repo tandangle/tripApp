@@ -48,21 +48,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-<<<<<<< HEAD
-// app.use(function(req,res,next) {
-//     console.log(req.isAuthenticated());
-//     next();
-// });
-
-//
-
-
-//initialize passport
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 //Google strategy 
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,7 +67,6 @@ app.get('/auth/google/callback',
     res.redirect('/redirect');
   });
 
-=======
 // restrict unauthenticated users from accesing pages other than login/register pages
 app.use(function(req,res,next ){
     if(req.path === "/login" || req.path === "/register"){
@@ -91,7 +77,6 @@ app.use(function(req,res,next ){
         res.redirect("/login")
     }
 })
->>>>>>> master
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
