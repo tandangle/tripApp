@@ -14,12 +14,6 @@ router.get("/", function(req, res) {
     console.log("Get to Dashboard");
     console.log(req.user)
     travelList.findAll({
-<<<<<<< HEAD
-        where: {Users_id: req.Users_id}
-    })
-    .then(function (travelLists){
-        res.render('dashboard', {Users: req.Users.firstName, travelLists: travelLists})
-=======
         where: {user_id: req.user}
     })
     // .then(async function (travelList){
@@ -60,7 +54,6 @@ router.get("/", function(req, res) {
                 res.render("dashboard", {placeDetails: placeDetails})
             }
         })
->>>>>>> origin/tan-dashboard
     })
 })
 
