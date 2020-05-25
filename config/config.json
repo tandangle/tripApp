@@ -1,26 +1,27 @@
 {
-  "development": {
-    "username": "postgres",
-    "password": "belcross2yeah",
-    "database": "tripApp",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "test": {
-    "username": "postgres",
-    "password": null,
-    "database": "tripApp",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "production": {
-    "username": "postgres",
-    "password": null,
-    "database": "tripApp",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  }
+    "development": {
+        "username": "postgres",
+        "password": "belcross2yeah",
+        "database": "tripApp",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "operatorsAliases": false
+    },
+    "test": {
+        "username": "postgres",
+        "password": null,
+        "database": "tripApp",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "operatorsAliases": false
+    },
+    "production": {
+        "username": "postgres",
+        "password": null,
+        "database": "tripApp",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "operatorsAliases": false,
+        "use_env_variable": "DATATBASE_URL"
+    }
 }
