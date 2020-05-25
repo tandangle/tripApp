@@ -25,6 +25,11 @@
         <% if (typeof placeDetails !== 'undefined') { %> <% placeDetails.forEach( function(placeDetail){ %>
           <div class="card" style="width: 18rem;">
             <div class="card-body">
+              <form action="/dashboard/delete/<%= placeDetail.result.travelList_id %>" method="POST">
+                <button type="button submit" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </form>
               <h5 class="card-title"><%= placeDetail.result.name %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= placeDetail.result.formatted_address %></h6>
               <p class="card-text"><%= placeDetail.result.formatted_phone_number %>
