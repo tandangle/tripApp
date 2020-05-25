@@ -34,10 +34,12 @@ router.get("/", function(req, res) {
     .then(function (travelList){
         console.log("Line 35");
         var placeDetails = [];
-        async.each(travelList, function(item, callback){
+        async.eachOf(travelList, function(item, i, callback){
             axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${item.place_id}&key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E`)
                     .then(function(response){
+                        response.data.result.travelList_id = item.id;
                         placeDetails.push(response.data);
+                        console.log(placeDetails)
                         callback(null)
                     })
                     .catch(function(error){
@@ -49,7 +51,7 @@ router.get("/", function(req, res) {
                 console.log("line 49")
                 console.log(err)
             } else {
-                console.log(placeDetails);
+                // console.log(placeDetails);
                 console.log("Line 53");
                 res.render("dashboard", {placeDetails: placeDetails})
             }
