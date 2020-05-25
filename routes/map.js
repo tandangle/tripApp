@@ -11,12 +11,12 @@ router.get("/", function(req, res, next) {
 router.post('/travel_list/:place_id', async function(req, res) {
     console.log(req.params.place_id);
     await travelList.findOne({
-        where: {user_id: "1",
+        where: {user_id: req.user,
                 place_id: req.params.place_id}
     })
     .then(function(result){
         if(!result) {
-    travelList.create(({user_id: "1", place_id: req.params.place_id}))
+    travelList.create(({user_id: req.user, place_id: req.params.place_id}))
     .then(function(result){
         console.log(result)
     })
