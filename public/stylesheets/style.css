@@ -19,6 +19,7 @@ margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
+flex-direction: column;
 }
 
 .social_icon span{
@@ -91,4 +92,24 @@ p {
 
 a {
   color: white;
+}
+
+#Title {
+  color: white;
+  font-size: 50px;
+  text-align: center;
+}
+
+.megacontainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.wherecard {
+    height: 370px; 
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 200px;
+    background-color:  rgba(0,0,0,0.5) !important;
+    color: white;
 }

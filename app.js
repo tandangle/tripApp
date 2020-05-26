@@ -10,10 +10,12 @@ const db = require('./models')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
+var loginRouter = require('./routes/login'); 
 var loginRouter = require('./routes/login');
 var mapRouter = require('./routes/map')
 var dashboardRouter = require('./routes/dashboard')
 require('./config/passport')
+
 
 var app = express();
 
@@ -45,6 +47,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+//Google strategy 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/error', (req, res) => res.redirect("/error"))
+app.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => res.redirect("/"))
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    res.redirect('/redirect');
+  });
 
 // restrict unauthenticated users from accesing pages other than login/register pages
 app.use(function(req,res,next ){
