@@ -78,6 +78,13 @@ app.use(function(req,res,next ){
     }
 })
 
+app.use(function(req, res, next) {
+    if (req.isAuthenticated() && req.path == "/login" || req.isAuthenticated() && req.path == "/register") {
+      return res.redirect("/dashboard");
+    }
+    next();
+})
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);

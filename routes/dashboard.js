@@ -4,11 +4,6 @@ const travelList = require('../models').travelList;
 const axios = require('axios');
 var async = require("async");
 
-/* GET users listing. */
-// router.get("/", function(req, res, next) {
-//     console.log(req.isAuthenticated());
-//     res.render("dashboard")
-// });
 
 router.get("/", function(req, res) {
     console.log("Get to Dashboard");
@@ -16,28 +11,15 @@ router.get("/", function(req, res) {
     travelList.findAll({
         where: {user_id: req.user}
     })
-    // .then(async function (travelList){
-    //     console.log(travelList);
-    //     placeDetails = [];
-    //     for await (let item of travelList){
-    //         axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${item.place_id}&key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E`)
-    //         .then(function(response){
-    //             placeDetails.push(response.data)
-    //         })
-    //         .catch(function(error){
-    //             console.log(error)
-    //         })
-    //     }
-    //     console.log(placeDetails);
-    //     res.render("dashboard", {placeDetails: placeDetails})
-    // })
     .then(function (travelList){
         console.log("Line 35");
         var placeDetails = [];
-        async.each(travelList, function(item, callback){
+        async.eachOf(travelList, function(item, i, callback){
             axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${item.place_id}&key=AIzaSyDkevaDGz23RoPFkAmtHmOYQQQXwhnfS5E`)
                     .then(function(response){
+                        response.data.result.travelList_id = item.id;
                         placeDetails.push(response.data);
+                        console.log(placeDetails)
                         callback(null)
                     })
                     .catch(function(error){
@@ -49,12 +31,29 @@ router.get("/", function(req, res) {
                 console.log("line 49")
                 console.log(err)
             } else {
-                console.log(placeDetails);
                 console.log("Line 53");
                 res.render("dashboard", {placeDetails: placeDetails})
             }
         })
     })
 })
+
+
+router.post("/delete/:id", (req, res) => {
+    console.log(" req.params.id = " + req.params.id)
+    travelList.destroy({
+            where: {
+               id : req.params.id
+            }
+        }).then(function (resp) {
+            console.log(resp)
+            res.redirect('/dashboard');
+        })
+        .catch(err => {
+            res.status(401).json(err);
+        });
+});
+
+
 
 module.exports = router;

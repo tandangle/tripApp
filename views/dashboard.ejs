@@ -16,7 +16,11 @@
               <nav>
                 <ul>
                   <li><a href= "/map">Map</a></li>
+<<<<<<< HEAD
                   <li><button id="/logout">Logout</button></a></li>
+=======
+                  <li><a href="/logout"><button id="logout">Logout</button></a></li>
+>>>>>>> master
                 </ul>
               </nav>
             </div> 
@@ -25,11 +29,16 @@
         <% if (typeof placeDetails !== 'undefined') { %> <% placeDetails.forEach( function(placeDetail){ %>
           <div class="card" style="width: 18rem;">
             <div class="card-body">
+              <form action="/dashboard/delete/<%= placeDetail.result.travelList_id %>" method="POST">
+                <button type="button submit" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </form>
               <h5 class="card-title"><%= placeDetail.result.name %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= placeDetail.result.formatted_address %></h6>
               <p class="card-text"><%= placeDetail.result.formatted_phone_number %>
               Rating: <%= placeDetail.result.rating %></p>
-              <a href="<%= placeDetail.result.url %>" class="card-link">Link</a>
+              <a href="<%= placeDetail.result.url %>" target="_blank" class="card-link">Link</a>
             </div>
           </div>
           <% }) %> <% } %>
