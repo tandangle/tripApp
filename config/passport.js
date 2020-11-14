@@ -29,7 +29,6 @@ const User = require('../models').User;
     }
   ));
 
-
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
